@@ -13,33 +13,61 @@ const defaultCartState: CartState = {
     totalAmount: 0
 }
 
+function addItem(state: CartState, item: FoodItem): CartState {
+    const updatedTotalAmount = state.totalAmount + item.amount * item.price
+
+    const index = state.items.findIndex((val) => val.id === item.id)
+    const foundItem = state.items[index]
+
+    let updatedItems: FoodItem[]
+    if (foundItem) {
+        const updatedItem = {
+            ...foundItem,
+            amount: foundItem.amount + item.amount
+        }
+        updatedItems = [...state.items]
+        updatedItems[index] = updatedItem
+    } else {
+        updatedItems = state.items.concat(item)
+    }
+    
+    return {
+        items: updatedItems,
+        totalAmount: updatedTotalAmount
+    }
+}
+
+function removeItem(state: CartState, id: string): CartState {
+    const index = state.items.findIndex((val) => val.id === id)
+    const item = state.items[index]
+    
+
+    const updatedTotalAmount = state.totalAmount - item.price
+    let updatedItems: FoodItem[]
+    if (item.amount === 1) {
+        updatedItems = state.items.filter(i => i.id !== id)
+    } else {
+        updatedItems = [...state.items]
+        updatedItems[index] = {
+            ...item,
+            amount: item.amount - 1
+        }
+    }
+
+
+    return {
+        totalAmount: updatedTotalAmount,
+        items: updatedItems
+    }
+}
+
 function cartReducer(state: CartState, action: CartAction): CartState {
     switch (action.type) {
         case 'ADD':
-            const updatedTotalAmount = state.totalAmount + action.item.amount * action.item.price
+            return addItem(state, action.item)
 
-            const index = state.items.findIndex((val) => val.id === action.item.id)
-            const item = state.items[index]
-
-            let updatedItems: FoodItem[]
-            if (item) {
-                const updatedItem = {
-                    ...item,
-                    amount: item.amount + action.item.amount
-                }
-                updatedItems = [...state.items]
-                updatedItems[index] = updatedItem
-            } else {
-                updatedItems = state.items.concat(action.item)
-            }
-
-            console.log(updatedItems);
-
-            return {
-                items: updatedItems,
-                totalAmount: updatedTotalAmount
-            }
-
+        case 'REMOVE':
+            return removeItem(state, action.item.id!)
 
         default:
             return defaultCartState
@@ -53,7 +81,7 @@ function CartProvider({ children }: ContainerComponent) {
         dispatchCartAction({ type: 'ADD', item })
     }
     function removeItem(id: string) {
-
+        dispatchCartAction({ type: "REMOVE", item: { id } as FoodItem })
     }
 
     const ctx: CartContextType = {
