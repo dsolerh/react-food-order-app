@@ -6,7 +6,7 @@ import { CartContext } from "./cart-contex";
 
 type CartActionType = 'ADD' | 'REMOVE'
 type CartAction = { type: CartActionType, item: FoodItem }
-type CartState = {items: FoodItem[], totalAmount: number}
+type CartState = { items: FoodItem[], totalAmount: number }
 
 const defaultCartState: CartState = {
     items: [],
@@ -16,13 +16,31 @@ const defaultCartState: CartState = {
 function cartReducer(state: CartState, action: CartAction): CartState {
     switch (action.type) {
         case 'ADD':
-            const updatedItems = state.items.concat(action.item)
             const updatedTotalAmount = state.totalAmount + action.item.amount * action.item.price
+
+            const index = state.items.findIndex((val) => val.id === action.item.id)
+            const item = state.items[index]
+
+            let updatedItems: FoodItem[]
+            if (item) {
+                const updatedItem = {
+                    ...item,
+                    amount: item.amount + 1
+                }
+                updatedItems = [...state.items]
+                updatedItems[index] = updatedItem
+            } else {
+                updatedItems = state.items.concat(action.item)
+            }
+
+            console.log(updatedItems);
+
             return {
                 items: updatedItems,
                 totalAmount: updatedTotalAmount
             }
-    
+
+
         default:
             return defaultCartState
     }
