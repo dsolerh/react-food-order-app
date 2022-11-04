@@ -8,7 +8,7 @@ function App() {
   return (
     <>
       {showCart && <Cart onClose={() => setShowCart(false)} />}
-      <Header />
+      <Header onOpenCart={()=>setShowCart(true)}/>
       <main>
         <Meals />
       </main>
