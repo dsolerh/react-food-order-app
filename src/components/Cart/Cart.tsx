@@ -17,7 +17,7 @@ function Cart({ onClose }: CartProps) {
             name={item.name}
             price={item.price}
             amount={item.amount}
-            onAdd={() => { ctx.addItem(item) }}
+            onAdd={() => { ctx.addItem({...item, amount: 1}) }}
             onRemove={() => { ctx.removeItem(item.id!) }}
         />
     ))

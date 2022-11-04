@@ -25,7 +25,7 @@ function cartReducer(state: CartState, action: CartAction): CartState {
             if (item) {
                 const updatedItem = {
                     ...item,
-                    amount: item.amount + 1
+                    amount: item.amount + action.item.amount
                 }
                 updatedItems = [...state.items]
                 updatedItems[index] = updatedItem
