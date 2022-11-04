@@ -1,6 +1,5 @@
-import FoodItem from "../../types/FoodItem";
 import Modal from "../UI/Modal";
-import { CartActions, CartButton, CartButtonAlt, CartList } from "./styles";
+import { CartActions, CartButton, CartButtonAlt, CartList, CartTotal } from "./styles";
 
 function Cart() {
     const cartItems = [{ id: 'c1', name: 'Sushi', amount: 2, price: 12.99 }]
@@ -8,10 +7,10 @@ function Cart() {
     return (
         <Modal>
             <CartList>{cartItems}</CartList>
-            <div>
+            <CartTotal>
                 <span>Total amount</span>
                 <span>35.63</span>
-            </div>
+            </CartTotal>
             <CartActions>
                 <CartButtonAlt>Close</CartButtonAlt>
                 <CartButton>Order</CartButton>
