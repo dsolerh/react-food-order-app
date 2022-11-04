@@ -53,12 +53,16 @@ function ModalOvarlay({ children, className }: ContainerComponent & StyledCompon
   );
 }
 
-function Modal({ children }: ContainerComponent) {
+interface ModalProps extends ContainerComponent {
+  onClose?: () => void
+}
+
+function Modal({ children, onClose }: ModalProps) {
   const portal = document.getElementById('overlays')!
 
   return (
     <>
-      {ReactDOM.createPortal(<Backdrop />, portal)}
+      {ReactDOM.createPortal(<Backdrop onClick={() => onClose && onClose()} />, portal)}
       {ReactDOM.createPortal(<ModalOvarlay>{children}</ModalOvarlay>, portal)}
     </>
   );
