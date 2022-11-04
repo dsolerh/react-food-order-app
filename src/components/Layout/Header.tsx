@@ -1,4 +1,5 @@
 import mealsImage from '../../assets/meals.jpg'
+import CartButton from './CartButton';
 import { HeaderStyled, ImageWrapper } from './styles';
 
 function Header() {
@@ -6,7 +7,7 @@ function Header() {
         <>
             <HeaderStyled>
                 <h1>React Meals</h1>
-                <button>Cart</button>
+                <CartButton />
             </HeaderStyled>
             <ImageWrapper>
                 <img src={mealsImage} alt="A table full of food!" />
