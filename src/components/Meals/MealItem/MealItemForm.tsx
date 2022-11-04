@@ -1,12 +1,16 @@
 import Input from "../../UI/Input";
 import { Form } from "./styles";
 
-function MealItemForm() {
+interface MealItemFormProps {
+    id?: string
+}
+
+function MealItemForm({ id }: MealItemFormProps) {
     return (
         <Form action="">
-            <Input 
-                id="amount" 
-                label="Amount" 
+            <Input
+                id={"amount_" + id}
+                label="Amount"
                 type='number'
                 min='1'
                 max='5'

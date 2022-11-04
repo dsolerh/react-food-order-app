@@ -2,12 +2,13 @@ import MealItemForm from "./MealItemForm";
 import { Meal, MealDescription, MealPrice } from "./styles";
 
 interface MealItemProps {
+    id: string
     name: string
     description: string
     price: number
 }
 
-function MealItem({ name, description, price }: MealItemProps) {
+function MealItem({id, name, description, price }: MealItemProps) {
     return (
         <Meal>
             <div>
@@ -16,7 +17,7 @@ function MealItem({ name, description, price }: MealItemProps) {
                 <MealPrice>{`$${price.toFixed(2)}`}</MealPrice>
             </div>
             <div>
-                <MealItemForm/>
+                <MealItemForm id={id}/>
             </div>
         </Meal>
     );
