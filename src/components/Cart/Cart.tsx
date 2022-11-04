@@ -2,7 +2,7 @@ import Modal from "../UI/Modal";
 import { CartActions, CartButton, CartButtonAlt, CartList, CartTotal } from "./styles";
 
 interface CartProps {
-    onClose?: () => void
+    onClose: () => void
 }
 
 function Cart({ onClose }: CartProps) {
