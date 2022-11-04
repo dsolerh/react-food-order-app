@@ -1,7 +1,8 @@
+import FoodItem from "../../../types/FoodItem";
 import MealItemForm from "./MealItemForm";
 import { Meal, MealDescription, MealPrice } from "./styles";
 
-interface MealItemProps {
+interface MealItemProps extends FoodItem {
     id: string
     name: string
     description: string
