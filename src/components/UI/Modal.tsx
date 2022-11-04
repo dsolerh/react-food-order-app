@@ -54,7 +54,7 @@ function ModalOvarlay({ children, className }: ContainerComponent & StyledCompon
 }
 
 function Modal({ children }: ContainerComponent) {
-  const portal = document.getElementById('overlay')!
+  const portal = document.getElementById('overlays')!
 
   return (
     <>
