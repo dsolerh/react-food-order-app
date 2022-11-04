@@ -12,7 +12,7 @@ function CartItem({ name, price, amount, onAdd, onRemove }: CartItemProps) {
             <div>
                 <h2>{name}</h2>
                 <ItemSummary>
-                    <span className='price'>{price}</span>
+                    <span className='price'>{`$${price!.toFixed(2)}`}</span>
                     <span className='amount'>x {amount}</span>
                 </ItemSummary>
             </div>
