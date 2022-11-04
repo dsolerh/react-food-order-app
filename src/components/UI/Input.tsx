@@ -1,4 +1,4 @@
-import { InputHTMLAttributes } from "react";
+import React, { ForwardedRef, InputHTMLAttributes } from "react";
 import styled from "styled-components";
 
 interface InputProps extends InputHTMLAttributes<any> {
@@ -24,13 +24,15 @@ const InputWrapper = styled.div`
     }
 `
 
-function Input(props:InputProps) {
+const Input = React.forwardRef((props: InputProps, ref: ForwardedRef<HTMLInputElement>) => {
     return (
         <InputWrapper>
             <label htmlFor={props.id}>{props.label}</label>
-            <input id={props.id} {...props} />
+            <input id={props.id} ref={ref} {...props} />
         </InputWrapper>
     );
-}
+})
+
+
 
 export default Input;
