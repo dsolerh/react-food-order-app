@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { CartContext } from "../../store/cart-contex";
 import Modal from "../UI/Modal";
+import CartItem from "./CartItem";
 import { CartActions, CartButton, CartButtonAlt, CartList, CartTotal } from "./styles";
 
 interface CartProps {
@@ -9,7 +10,17 @@ interface CartProps {
 
 function Cart({ onClose }: CartProps) {
     const ctx = useContext(CartContext)
-    const cartItems = ctx.items.map(item => (<li>{item.name}</li>))
+
+    const cartItems = ctx.items.map(item => (
+        <CartItem
+            key={item.id}
+            name={item.name}
+            price={item.price}
+            amount={item.amount}
+            onAdd={() => { ctx.addItem(item) }}
+            onRemove={() => { ctx.removeItem(item.id) }}
+        />
+    ))
 
     return (
         <Modal onClose={onClose}>
