@@ -1,15 +1,36 @@
+import { FormEvent, useRef, useState } from "react";
 import Input from "../../UI/Input";
 import { Form } from "./styles";
 
 interface MealItemFormProps {
     id?: string
+    onAddData: (amount: number) => void
 }
 
-function MealItemForm({ id }: MealItemFormProps) {
+function MealItemForm({ id, onAddData }: MealItemFormProps) {
+    const amountRef = useRef<HTMLInputElement>(null)
+    const [isValid, setIsValid] = useState(true)
+
+    function submit(e: FormEvent) {
+        e.preventDefault()
+
+        const amountVal = amountRef.current?.value
+        const amountNum = +amountVal!
+
+        if ((amountVal && amountVal.trim() === '') ||
+            amountNum < 1 ||
+            amountNum > 5) {
+            setIsValid(false)
+            return
+        }
+
+        onAddData(amountNum)
+    }
     return (
-        <Form action="">
+        <Form onSubmit={submit}>
             <Input
                 id={"amount_" + id}
+                ref={amountRef}
                 label="Amount"
                 type='number'
                 min='1'
@@ -17,7 +38,8 @@ function MealItemForm({ id }: MealItemFormProps) {
                 step='1'
                 defaultValue='1'
             />
-            <button>+ Add</button>
+            <button type="submit">+ Add</button>
+            {!isValid && <p>Please enter a valid amount (1-5).</p>}
         </Form>
     );
 }
