@@ -2,12 +2,16 @@ import mealsImage from '../../assets/meals.jpg'
 import CartButton from './CartButton';
 import { HeaderStyled, ImageWrapper } from './styles';
 
-function Header() {
+interface HeaderProps {
+    onOpenCart: () => void
+}
+
+function Header({ onOpenCart }: HeaderProps) {
     return (
         <>
             <HeaderStyled>
                 <h1>React Meals</h1>
-                <CartButton />
+                <CartButton onClick={onOpenCart} />
             </HeaderStyled>
             <ImageWrapper>
                 <img src={mealsImage} alt="A table full of food!" />
