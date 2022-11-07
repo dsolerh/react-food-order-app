@@ -52,6 +52,32 @@ export const Button = styled.button`
     &:active .badge {
         background-color: #92320c;
     }
+
+    &.bump {
+        animation: bump 300ms ease-out;
+    }
+
+    @keyframes bump {
+        0% {
+            transform: scale(1);
+        }
+
+        10% {
+            transform: scale(0.9);
+        }
+
+        30% {
+            transform: scale(1.1);
+        }
+
+        50% {
+            transform: scale(1.15);
+        }
+
+        100% {
+            transform: scale(1);
+        }
+    }
 `
 
 export const ButtonIcon = styled.span`
