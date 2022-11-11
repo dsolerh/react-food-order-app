@@ -37,7 +37,7 @@ function AvailableMeals() {
     const [meals, setMeals] = useState<Meals>([]);
 
     useEffect(() => {
-        (async () => {
+        async function getData() {
             const response = await fetch('https://react-complete-course-c5824-default-rtdb.europe-west1.firebasedatabase.app/meals.json');
             const data = await response.json()
 
@@ -51,11 +51,9 @@ function AvailableMeals() {
                 })
             }
 
-            return meals
-        })().then((data) => {
-            setMeals(data);
-        })
-
+            setMeals(meals);
+        }
+        getData();
     }, [])
 
     const mealsList = meals.map(meal => (
