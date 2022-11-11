@@ -44,3 +44,13 @@ export const AvailableMealsSection = styled.section`
         }
     }
 `
+
+export const LoadingSection = styled.section`
+    text-align: center;
+    color: white;
+`
+
+export const ErrorSection = styled.section`
+    text-align: center;
+    color: red;
+`
