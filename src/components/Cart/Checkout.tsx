@@ -1,18 +1,20 @@
 import { FormEvent, useRef, useState } from "react";
+import OrderData from "../../types/OrderData";
 import { CustomInput } from "../UI/Input";
 import { CartActions, CartButton, CartButtonAlt, CheckoutForm } from "./styles";
 
 interface CheckoutProps {
-    onCancel: () => void
+    onCancel: () => void,
+    onSubmit: (order: OrderData) => void
 }
 
 const isEmpty = (s: string) => s.trim() === '';
-const maxLenght = (n: number) => (s: string) => s.trim().length > n;
-const minLenght = (n: number) => (s: string) => s.trim().length < n;
+// const maxLenght = (n: number) => (s: string) => s.trim().length > n;
+// const minLenght = (n: number) => (s: string) => s.trim().length < n;
 const lenght = (n: number) => (s: string) => s.trim().length === n;
 
-function Checkout({ onCancel }: CheckoutProps) {
-    const [error, setError] = useState<{name?: string, street?:string, code?:string, city?: string}>({
+function Checkout({ onCancel, onSubmit }: CheckoutProps) {
+    const [error, setError] = useState<Partial<OrderData>>({
         name: undefined,
         street: undefined,
         code: undefined,
@@ -46,7 +48,12 @@ function Checkout({ onCancel }: CheckoutProps) {
         })
 
         if (isValid) {
-
+            onSubmit({
+                name: nameVal,
+                street: streetVal,
+                code: codeVal,
+                city: cityVal,
+            });
         }
     }
 

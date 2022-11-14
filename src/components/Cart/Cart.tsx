@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { CartContext } from "../../store/cart-contex";
+import OrderData from "../../types/OrderData";
 import Modal from "../UI/Modal";
 import CartItem from "./CartItem";
 import Checkout from "./Checkout";
@@ -29,6 +30,10 @@ function Cart({ onClose }: CartProps) {
         {ctx.items.length > 0 && <CartButton onClick={() => setShowCheckout(true)}>Order</CartButton>}
     </CartActions>
 
+    const submitOrder = (order: OrderData) => {
+        
+    }
+
     return (
         <Modal onClose={onClose}>
             <CartList>{cartItems}</CartList>
@@ -36,7 +41,7 @@ function Cart({ onClose }: CartProps) {
                 <span>Total amount</span>
                 <span>{`$${ctx.totalAmount.toFixed(2)}`}</span>
             </CartTotal>
-            {showCheckout && <Checkout onCancel={() => onClose && onClose()} />}
+            {showCheckout && <Checkout onCancel={() => onClose && onClose()} onSubmit={submitOrder} />}
             {!showCheckout && modalActions}
         </Modal>
     );
