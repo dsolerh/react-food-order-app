@@ -28,6 +28,7 @@ function Cart({ onClose }: CartProps) {
         });
         setIsSubmitting(false);
         setDidSubmit(true);
+        ctx.clearItems();
     }
 
     const cartItems = ctx.items.map(item => (
