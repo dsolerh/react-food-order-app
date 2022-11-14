@@ -65,4 +65,8 @@ export const CustomInput = styled(Input) <CustomInputProps>`
         width: 20rem;
         max-width: 100%;
     }
+
+    & p {
+        color: ${props => props.invalid ? '#aa0b20' : 'initial'};
+    }
 `
