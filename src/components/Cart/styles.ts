@@ -111,3 +111,9 @@ export const ItemActions = styled.div`
         color: white;
     }
 `
+
+export const CheckoutForm = styled.form`
+    margin: 1rem 0 0 0;
+    height: 15rem;
+    overflow: scroll;
+`
