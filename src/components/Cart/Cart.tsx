@@ -1,4 +1,5 @@
 import { useContext, useState } from "react";
+import { API_URL } from "../../constants/api";
 import { CartContext } from "../../store/cart-contex";
 import OrderData from "../../types/OrderData";
 import Modal from "../UI/Modal";
@@ -12,7 +13,22 @@ interface CartProps {
 
 function Cart({ onClose }: CartProps) {
     const ctx = useContext(CartContext)
-    const [showCheckout, setShowCheckout] = useState(false)
+    const [showCheckout, setShowCheckout] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [didSubmit, setDidSubmit] = useState(false);
+
+    const submitOrder = async (order: OrderData) => {
+        setIsSubmitting(true);
+        await fetch(`${API_URL}/orders.json`, {
+            method: 'POST',
+            body: JSON.stringify({
+                order_data: order,
+                order_items: ctx.items,
+            })
+        });
+        setIsSubmitting(false);
+        setDidSubmit(true);
+    }
 
     const cartItems = ctx.items.map(item => (
         <CartItem
@@ -30,19 +46,24 @@ function Cart({ onClose }: CartProps) {
         {ctx.items.length > 0 && <CartButton onClick={() => setShowCheckout(true)}>Order</CartButton>}
     </CartActions>
 
-    const submitOrder = (order: OrderData) => {
-        
-    }
+    const modalContent = <>
+        <CartList>{cartItems}</CartList>
+        <CartTotal>
+            <span>Total amount</span>
+            <span>{`$${ctx.totalAmount.toFixed(2)}`}</span>
+        </CartTotal>
+        {showCheckout && <Checkout onCancel={() => onClose && onClose()} onSubmit={submitOrder} />}
+        {!showCheckout && modalActions}
+    </>
+    
+    const isSubmittingContent = <p>Sending order data...</p>
+    const didSubmitContent = <p>Successfully sent the order!</p>
 
     return (
         <Modal onClose={onClose}>
-            <CartList>{cartItems}</CartList>
-            <CartTotal>
-                <span>Total amount</span>
-                <span>{`$${ctx.totalAmount.toFixed(2)}`}</span>
-            </CartTotal>
-            {showCheckout && <Checkout onCancel={() => onClose && onClose()} onSubmit={submitOrder} />}
-            {!showCheckout && modalActions}
+            {(!isSubmitting && !didSubmit) && modalContent}
+            {isSubmitting && isSubmittingContent}
+            {didSubmit && didSubmitContent}
         </Modal>
     );
 }
