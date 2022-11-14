@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { API_URL } from "../../constants/api";
 import FoodItem from "../../types/FoodItem";
 import { Card } from "../UI/Card";
 import MealItem from "./MealItem/MealItem";
@@ -41,7 +42,7 @@ function AvailableMeals() {
     useEffect(() => {
         setLoading(true);
         async function getData() {
-            const response = await fetch('https://react-complete-course-c5824-default-rtdb.europe-west1.firebasedatabase.app/meals.json');
+            const response = await fetch(`${API_URL}/meals.json`);
 
             if (!response.ok) {
                 throw new Error('Something went wrong!')
