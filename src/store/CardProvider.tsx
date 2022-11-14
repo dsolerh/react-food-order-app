@@ -4,9 +4,9 @@ import ContainerComponent from "../types/ContainerComponent";
 import FoodItem from "../types/FoodItem";
 import { CartContext } from "./cart-contex";
 
-type CartActionType = 'ADD' | 'REMOVE'
-type CartAction = { type: CartActionType, item: FoodItem }
-type CartState = { items: FoodItem[], totalAmount: number }
+type CartActionType = 'ADD' | 'REMOVE' | 'CLEAR';
+type CartAction = { type: CartActionType, item: FoodItem };
+type CartState = { items: FoodItem[], totalAmount: number };
 
 const defaultCartState: CartState = {
     items: [],
@@ -30,7 +30,7 @@ function addItem(state: CartState, item: FoodItem): CartState {
     } else {
         updatedItems = state.items.concat(item)
     }
-    
+
     return {
         items: updatedItems,
         totalAmount: updatedTotalAmount
@@ -40,7 +40,7 @@ function addItem(state: CartState, item: FoodItem): CartState {
 function removeItem(state: CartState, id: string): CartState {
     const index = state.items.findIndex((val) => val.id === id)
     const item = state.items[index]
-    
+
 
     const updatedTotalAmount = state.totalAmount - item.price
     let updatedItems: FoodItem[]
@@ -69,6 +69,7 @@ function cartReducer(state: CartState, action: CartAction): CartState {
         case 'REMOVE':
             return removeItem(state, action.item.id!)
 
+        case 'CLEAR':
         default:
             return defaultCartState
     }
@@ -83,12 +84,16 @@ function CartProvider({ children }: ContainerComponent) {
     function removeItem(id: string) {
         dispatchCartAction({ type: "REMOVE", item: { id } as FoodItem })
     }
+    function clearItems() {
+        dispatchCartAction({ type: "CLEAR", item: {} as FoodItem })
+    }
 
     const ctx: CartContextType = {
         items: cartState.items,
         totalAmount: cartState.totalAmount,
         addItem,
-        removeItem
+        removeItem,
+        clearItems
     }
     return (
         <CartContext.Provider value={ctx}>

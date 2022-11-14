@@ -5,4 +5,5 @@ export default interface CartContextType {
     totalAmount: number
     addItem: (item: FoodItem) => void
     removeItem: (id: string) => void
+    clearItems: () => void
 }
